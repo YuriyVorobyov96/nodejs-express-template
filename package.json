@@ -1,0 +1,20 @@
+{
+  "name": "express-template",
+  "version": "1.0.0",
+  "description": "Express application template for A2SEVEN",
+  "main": "index.js",
+  "scripts": {
+		"build": "tsc",
+		"start": "node ./dist/main.js",
+		"dev": "nodemon",
+		"lint": "eslint ./src/**",
+		"lint:fix": "eslint ./src/** --fix",
+		"test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@a2seven/eslint-config": "^1.0.3",
+    "eslint": "8.23.1"
+  }
+}

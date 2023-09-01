@@ -2,10 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 
 import HttpError from '../classes/http-error.class';
 import { IExceptionFilter } from '../interfaces/exeption.filter.interface';
-import LoggerService from '../logger/logger.sevice';
+import { ILogger } from '../interfaces/logger.interface';
 
 export default class ExceptionFilter implements IExceptionFilter {
-  constructor(private logger: LoggerService) {}
+  constructor(private logger: ILogger) {}
 
   public catch(
     err: Error | HttpError,

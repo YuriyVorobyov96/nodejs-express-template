@@ -2,7 +2,7 @@ import express, { Express } from 'express';
 import { Server } from 'http';
 
 import ExceptionFilter from './common/filters/exeption.filter';
-import LoggerService from './common/logger/logger.sevice';
+import { ILogger } from './common/interfaces/logger.interface';
 import UsersController from './modules/users/users.controller';
 
 export default class App {
@@ -12,14 +12,14 @@ export default class App {
 
   private port: number;
 
-  private logger: LoggerService;
+  private logger: ILogger;
 
   private usersController: UsersController;
 
   private exceptionFilter: ExceptionFilter;
 
   constructor(
-    logger: LoggerService,
+    logger: ILogger,
     usersController: UsersController,
     exceptionFilter: ExceptionFilter,
   ) {

@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import { Response, Router } from 'express';
 
+import { ILogger } from '../interfaces/logger.interface';
 import { IRoute } from '../interfaces/route.interface';
-import LoggerService from '../logger/logger.sevice';
 
 export { Router } from 'express';
 
 export default abstract class AController {
   private readonly _router: Router;
 
-  constructor(private logger: LoggerService) {
+  constructor(private logger: ILogger) {
     this._router = Router();
   }
 

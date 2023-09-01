@@ -31,7 +31,7 @@ export default class App {
     this.exceptionFilter = exceptionFilter;
   }
 
-  private useMiddleware(): void {
+  private useMiddlewares(): void {
     this.app.use(json());
   }
 
@@ -44,7 +44,7 @@ export default class App {
   }
 
   public async init(): Promise<void> {
-    this.useMiddleware();
+    this.useMiddlewares();
     this.useRoutes();
     this.useExceptionFilters();
 

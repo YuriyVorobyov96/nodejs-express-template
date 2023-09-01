@@ -79,9 +79,9 @@ export default class UsersService implements IUsersService {
   }
 
   private hashPassword(password: string): Promise<string> {
-    const saltRound = this.configService.get('SALT');
+    const saltRound = this.configService.get('SALT_ROUND');
 
-    return hash(password, saltRound);
+    return hash(password, Number(saltRound));
   }
 
   private comparePassword(

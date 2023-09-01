@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@a2seven/eslint-config@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@a2seven/eslint-config/-/eslint-config-1.0.3.tgz"
-  integrity sha512-ONo9xmasLJ0qBa/FD8Dd6h/IBiqNeAXdxSmLdDeMnlMBn9ZdOJor1lcPfWljJqkqSrwLTbjRY8untfzprJjofg==
+"@a2seven/eslint-config@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@a2seven/eslint-config/-/eslint-config-1.0.4.tgz#50e55cbbf0b1461eedbb92bef9bc55f34149ff99"
+  integrity sha512-vA/lFkYwE3LQSBUN+qeToV8T11yLASR1+dXk83G8VyhvS4Zboq4OSEekcWvYuRo3lnB0NojWwdbjdokfkIc6dg==
 
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"

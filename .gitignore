@@ -30,6 +30,7 @@ lerna-debug.log*
 .vscode/*
 
 # Config
+.env
 config/local.js
 
 .npmrc

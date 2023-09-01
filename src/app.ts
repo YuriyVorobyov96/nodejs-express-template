@@ -1,17 +1,13 @@
 import 'reflect-metadata';
 
-import { json } from 'body-parser';
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { inject, injectable } from 'inversify';
 
 import TYPES from './common/dependency-injection/types';
-import { IExceptionFilter } from './common/interfaces/exeption.filter.interface';
+import { IHook } from './common/interfaces/hook.interface';
 import { ILogger } from './common/interfaces/logger.interface';
-import AuthMiddleware from './common/middlewares/auth.middleware';
-import { IConfigService } from './config/interfaces/config.service.interface';
 import PrismaService from './database/prisma.service';
-import UsersController from './modules/users/users.controller';
 
 @injectable()
 export default class App {
@@ -23,40 +19,19 @@ export default class App {
 
   constructor(
     @inject(TYPES.ILogger) private logger: ILogger,
-    @inject(TYPES.UsersController) private usersController: UsersController,
-    @inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
-    @inject(TYPES.ConfigService) private configService: IConfigService,
     @inject(TYPES.PrismaService) private prismaService: PrismaService,
+    @inject(TYPES.UseRoutes) private useRoutes: IHook,
+    @inject(TYPES.UseExceptionFilters) private useExceptionFilters: IHook,
+    @inject(TYPES.UseMiddlewares) private useMiddlewares: IHook,
   ) {
     this.app = express();
     this.port = 3000;
-
-    this.logger = logger;
-    this.usersController = usersController;
-    this.exceptionFilter = exceptionFilter;
-  }
-
-  private useMiddlewares(): void {
-    const authMiddleware = new AuthMiddleware(
-      this.configService.get('JWT_SECRET'),
-    );
-
-    this.app.use(json());
-    this.app.use(authMiddleware.execute.bind(authMiddleware));
-  }
-
-  private useRoutes(): void {
-    this.app.use('/users', this.usersController.router);
-  }
-
-  private useExceptionFilters(): void {
-    this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
   }
 
   public async init(): Promise<void> {
-    this.useMiddlewares();
-    this.useRoutes();
-    this.useExceptionFilters();
+    this.useMiddlewares.execute(this.app);
+    this.useRoutes.execute(this.app);
+    this.useExceptionFilters.execute(this.app);
 
     await this.prismaService.connect();
 

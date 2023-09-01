@@ -7,6 +7,9 @@ const TYPES = {
   ConfigService: Symbol.for('ConfigService'),
   PrismaService: Symbol.for('PrismaService'),
   UsersRepository: Symbol.for('UsersRepository'),
+  UseRoutes: Symbol.for('UseRoutes'),
+  UseMiddlewares: Symbol.for('UseMiddlewares'),
+  UseExceptionFilters: Symbol.for('UseExceptionFilters'),
 };
 
 export default TYPES;

@@ -37,6 +37,6 @@ export default class App {
 
     this.server = this.app.listen(this.port);
 
-    this.logger.log(`Server started at port: ${this.port}`);
+    this.logger.log(`[App] Server started at port: ${this.port}`);
   }
 }

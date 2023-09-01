@@ -6,9 +6,13 @@ import { inject, injectable } from 'inversify';
 import AController from '../../common/base/base.controller';
 import TYPES from '../../common/dependency-injection/types';
 import { ILogger } from '../../common/interfaces/logger.interface';
+import { IUsersController } from './users.controller.interface';
 
 @injectable()
-export default class UsersController extends AController {
+export default class UsersController
+  extends AController
+  implements IUsersController
+{
   constructor(@inject(TYPES.ILogger) logger: ILogger) {
     super(logger);
 

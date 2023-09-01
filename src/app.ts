@@ -9,9 +9,11 @@ import { DataSource } from 'typeorm';
 import TYPES from './common/dependency-injection/types';
 import { IHook } from './common/interfaces/hook.interface';
 import { ILogger } from './common/interfaces/logger.interface';
+import { TPort } from './common/types/port.type';
 import { IDatabaseService } from './database/interfaces/database.service.interface';
+import WWW from './www';
 
-const PORT: number = config.get('app.port');
+const PORT: TPort = config.get('app.port');
 
 @injectable()
 export default class App {
@@ -19,7 +21,7 @@ export default class App {
 
   private server: Server;
 
-  private port: number;
+  private port: TPort;
 
   constructor(
     @inject(TYPES.ILogger) private logger: ILogger,
@@ -30,7 +32,8 @@ export default class App {
     @inject(TYPES.UseMiddlewares) private useMiddlewares: IHook,
   ) {
     this.app = express();
-    this.port = PORT;
+
+    this.port = WWW.normalizePort(PORT);
   }
 
   public async init(): Promise<void> {
@@ -42,9 +45,9 @@ export default class App {
 
     this.server = this.app.listen(this.port);
 
-    this.logger.log(`[App] Server started at port: ${this.port}`);
-
     process.on('SIGTERM', () => this.close());
+
+    this.logger.log(`[App] Server started at port: ${this.port}`);
   }
 
   private async close(): Promise<void> {

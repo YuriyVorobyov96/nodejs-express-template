@@ -8,4 +8,8 @@ RUN yarn install
 
 COPY . .
 
+EXPOSE 3000
+
 RUN npm run build
+
+CMD ["node", "./dist/src/main.js"]

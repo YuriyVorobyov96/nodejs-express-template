@@ -1,0 +1,7 @@
+.git
+.idea
+.vscode
+config/local.js
+.env
+node_modules
+dist

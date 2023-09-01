@@ -1,0 +1,21 @@
+{
+  "app": {
+    "port": "PORT"
+  },
+  "typeorm": {
+    "type": "DP_TYPE",
+    "host": "DP_HOST",
+    "port": "DP_PORT",
+    "username": "DP_USERNAME",
+    "password": "DP_PASSWORD",
+    "database": "DP_DATABASE",
+    "synchronize": "DP_SYNCHRONIZE",
+    "logging": "DP_LOGGING"
+  },
+  "jwt": {
+    "secret": "JWT_SECRET"
+  },
+  "password": {
+    "salt_round": "SALT_ROUND"
+  }
+}

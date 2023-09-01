@@ -31,5 +31,6 @@ lerna-debug.log*
 
 # Config
 config/local.js
+.env
 
 .npmrc

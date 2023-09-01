@@ -1,5 +1,7 @@
+import { TPostgres } from '../types/postgres.type';
+
 export interface ITypeOrmConfig {
-  readonly type: 'postgres';
+  readonly type: TPostgres;
   readonly host: string;
   readonly port: number;
   readonly username: string;

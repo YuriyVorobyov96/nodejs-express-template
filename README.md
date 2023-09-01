@@ -40,6 +40,7 @@ npm run dev
 | start | run builded code |
 | dev | run code with hotreload |
 | inspect | run debugger |
+| test | run unit tests |
 | lint | run eslint |
 | lint:fix | run eslint with autofix |
 | migrate:up | run migrations |

@@ -5,17 +5,17 @@ import { Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { injectable } from 'inversify';
 
-import { ILogger } from '../interfaces/logger.interface';
+import { IController } from '../interfaces/controller.interface';
 import { IRoute } from '../interfaces/route.interface';
 import { TResponse } from '../types/response.type';
 
 export { Router } from 'express';
 
 @injectable()
-export default abstract class AController {
+export default abstract class AController implements IController {
   private readonly _router: Router;
 
-  constructor(private logger: ILogger) {
+  constructor() {
     this._router = Router();
   }
 

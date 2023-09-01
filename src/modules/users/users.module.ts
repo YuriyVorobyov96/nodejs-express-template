@@ -12,7 +12,7 @@ import UsersService from './users.service';
 export default class UsersModule implements IModule {
   public init(): ContainerModule {
     return new ContainerModule((bind: interfaces.Bind) => {
-      bind<IUsersController>(TYPES.UsersController)
+      bind<IUsersController>(TYPES.IUsersController)
         .to(UsersController)
         .inSingletonScope();
       bind<IUsersService>(TYPES.IUsersService)

@@ -1,6 +1,6 @@
+import User from '../../../database/entities/user.entity';
 import UserLoginDto from '../dto/user-login.dto';
 import UserRegisterDto from '../dto/user-register.dto';
-import User from '../entities/user.entity';
 import { IUserInfo } from './user-info.interface';
 
 export interface IUsersService {

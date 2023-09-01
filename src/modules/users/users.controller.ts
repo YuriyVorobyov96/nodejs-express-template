@@ -81,7 +81,7 @@ export default class UsersController
       );
     }
 
-    this.ok(res, user);
+    this.created(res);
   }
 
   public async info(

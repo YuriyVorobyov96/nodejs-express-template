@@ -1,7 +1,7 @@
-import { UserModel } from '../../../database/entities/user.entity';
-import User from '../entities/user.entity';
+import User from '../../../database/entities/user.entity';
+import { IUserRegister } from './user-register.interface';
 
 export interface IUsersRepository {
-  create: (user: User) => Promise<UserModel>;
-  find: (email: string) => Promise<UserModel | null>;
+  create: (user: IUserRegister) => Promise<User>;
+  find: (email: string) => Promise<User | null>;
 }

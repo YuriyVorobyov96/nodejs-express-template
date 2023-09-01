@@ -33,14 +33,10 @@ export default class UsersService implements IUsersService {
 
       const passwordHash = await this.hashPassword(password);
 
-      const user = new User({
+      return this.usersRepository.create({
         email,
         password: passwordHash,
       });
-
-      await this.usersRepository.create(user);
-
-      return user;
     } catch (e) {
       throw new HttpError(StatusCodes.BAD_REQUEST, 'Error on user creating');
     }

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 
 import HttpError from '../classes/http-error.class';
@@ -12,12 +12,7 @@ import { ILogger } from '../interfaces/logger.interface';
 export default class ExceptionFilter implements IExceptionFilter {
   constructor(@inject(TYPES.ILogger) private logger: ILogger) {}
 
-  public catch(
-    err: Error | HttpError,
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): void {
+  public catch(err: Error | HttpError, req: Request, res: Response): void {
     if (err instanceof HttpError) {
       this.logger.error(
         `[${err.context}] Error ${err.statusCode}: ${err.message}`,

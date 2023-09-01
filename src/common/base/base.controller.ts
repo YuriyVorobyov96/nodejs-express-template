@@ -6,6 +6,7 @@ import { injectable } from 'inversify';
 
 import { ILogger } from '../interfaces/logger.interface';
 import { IRoute } from '../interfaces/route.interface';
+import { TResponse } from '../types/response.type';
 
 export { Router } from 'express';
 
@@ -21,24 +22,17 @@ export default abstract class AController {
     return this._router;
   }
 
-  public send<T>(
-    res: Response,
-    code: number,
-    message: T,
-  ): Response<unknown, Record<string, unknown>> {
+  public send<T>(res: Response, code: number, message: T): TResponse {
     res.type('application/json');
 
     return res.status(code).json(message);
   }
 
-  public ok<T>(
-    res: Response,
-    message: T,
-  ): Response<unknown, Record<string, unknown>> {
+  public ok<T>(res: Response, message: T): TResponse {
     return this.send<T>(res, 200, message);
   }
 
-  public created(res: Response): Response<unknown, Record<string, unknown>> {
+  public created(res: Response): TResponse {
     return res.sendStatus(201);
   }
 

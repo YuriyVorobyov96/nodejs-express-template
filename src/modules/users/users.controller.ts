@@ -30,11 +30,11 @@ export default class UsersController
     ]);
   }
 
-  public login(req: Request, res: Response, next: NextFunction) {
+  public login(req: Request, res: Response, next: NextFunction): void {
     this.ok(res, 'login');
   }
 
-  public register(req: Request, res: Response, next: NextFunction) {
+  public register(req: Request, res: Response, next: NextFunction): void {
     this.ok(res, 'register');
   }
 }

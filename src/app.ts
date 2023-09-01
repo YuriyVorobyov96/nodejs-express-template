@@ -30,7 +30,7 @@ export default class App {
     this.exceptionFilter = exceptionFilter;
   }
 
-  private useMiddleware(): void { }
+  private useMiddleware(): void {}
 
   private useRoutes(): void {
     this.app.use('/users', this.usersController.router);

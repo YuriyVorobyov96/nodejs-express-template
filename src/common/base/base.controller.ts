@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Router } from 'express';
+import { Response, Router } from 'express';
 
 import { IRoute } from '../interfaces/route.interface';
 import LoggerService from '../logger/logger.sevice';
@@ -15,6 +15,27 @@ export default abstract class AController {
 
   public get router(): Router {
     return this._router;
+  }
+
+  public send<T>(
+    res: Response,
+    code: number,
+    message: T,
+  ): Response<unknown, Record<string, unknown>> {
+    res.type('application/json');
+
+    return res.status(code).json(message);
+  }
+
+  public ok<T>(
+    res: Response,
+    message: T,
+  ): Response<unknown, Record<string, unknown>> {
+    return this.send<T>(res, 200, message);
+  }
+
+  public created(res: Response): Response<unknown, Record<string, unknown>> {
+    return res.sendStatus(201);
   }
 
   protected bindRoutes(routes: IRoute[]): void {

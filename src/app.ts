@@ -8,6 +8,7 @@ import { inject, injectable } from 'inversify';
 import TYPES from './common/dependency-injection/types';
 import ExceptionFilter from './common/filters/exeption.filter';
 import { ILogger } from './common/interfaces/logger.interface';
+import { IConfigService } from './config/interfaces/config.service.interface';
 import UsersController from './modules/users/users.controller';
 
 @injectable()
@@ -22,6 +23,7 @@ export default class App {
     @inject(TYPES.ILogger) private logger: ILogger,
     @inject(TYPES.UsersController) private usersController: UsersController,
     @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
+    @inject(TYPES.ConfigService) private configService: IConfigService,
   ) {
     this.app = express();
     this.port = 3000;

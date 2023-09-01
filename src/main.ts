@@ -5,17 +5,26 @@ import TYPES from './common/dependency-injection/types';
 import ExceptionFilter from './common/filters/exeption.filter';
 import { ILogger } from './common/interfaces/logger.interface';
 import LoggerService from './common/logger/logger.sevice';
+import ConfigService from './config/config.service';
+import { IConfigService } from './config/interfaces/config.service.interface';
 import { IUsersController } from './modules/users/interfaces/users.controller.interface';
 import { IUsersService } from './modules/users/interfaces/users.service.interface';
 import UsersController from './modules/users/users.controller';
 import UsersService from './modules/users/users.service';
 
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
-  bind<ILogger>(TYPES.ILogger).to(LoggerService);
-  bind<ExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
-  bind<IUsersController>(TYPES.UsersController).to(UsersController);
-  bind<IUsersService>(TYPES.UsersService).to(UsersService);
-  bind<App>(TYPES.Application).to(App);
+  bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
+  bind<ExceptionFilter>(TYPES.ExceptionFilter)
+    .to(ExceptionFilter)
+    .inSingletonScope();
+  bind<IUsersController>(TYPES.UsersController)
+    .to(UsersController)
+    .inSingletonScope();
+  bind<IUsersService>(TYPES.UsersService).to(UsersService).inSingletonScope();
+  bind<IConfigService>(TYPES.ConfigService)
+    .to(ConfigService)
+    .inSingletonScope();
+  bind<App>(TYPES.Application).to(App).inSingletonScope();
 });
 
 async function bootstrap(): Promise<void> {

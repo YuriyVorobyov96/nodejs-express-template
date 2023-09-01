@@ -7,6 +7,7 @@ import { ILogger } from './common/interfaces/logger.interface';
 import LoggerService from './common/logger/logger.sevice';
 import ConfigService from './config/config.service';
 import { IConfigService } from './config/interfaces/config.service.interface';
+import PrismaService from './database/prisma.service';
 import { IUsersController } from './modules/users/interfaces/users.controller.interface';
 import { IUsersService } from './modules/users/interfaces/users.service.interface';
 import UsersController from './modules/users/users.controller';
@@ -24,6 +25,7 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<IConfigService>(TYPES.ConfigService)
     .to(ConfigService)
     .inSingletonScope();
+  bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
   bind<App>(TYPES.Application).to(App).inSingletonScope();
 });
 

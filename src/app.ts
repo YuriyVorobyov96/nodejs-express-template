@@ -9,6 +9,7 @@ import TYPES from './common/dependency-injection/types';
 import ExceptionFilter from './common/filters/exeption.filter';
 import { ILogger } from './common/interfaces/logger.interface';
 import { IConfigService } from './config/interfaces/config.service.interface';
+import PrismaService from './database/prisma.service';
 import UsersController from './modules/users/users.controller';
 
 @injectable()
@@ -24,6 +25,7 @@ export default class App {
     @inject(TYPES.UsersController) private usersController: UsersController,
     @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
     @inject(TYPES.ConfigService) private configService: IConfigService,
+    @inject(TYPES.PrismaService) private prismaService: PrismaService,
   ) {
     this.app = express();
     this.port = 3000;
@@ -49,6 +51,8 @@ export default class App {
     this.useMiddlewares();
     this.useRoutes();
     this.useExceptionFilters();
+
+    await this.prismaService.connect();
 
     this.server = this.app.listen(this.port);
 

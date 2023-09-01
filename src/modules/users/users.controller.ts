@@ -7,13 +7,13 @@ import { inject, injectable } from 'inversify';
 import AController from '../../common/base/base.controller';
 import HttpError from '../../common/classes/http-error.class';
 import TYPES from '../../common/dependency-injection/types';
+import AuthGuard from '../../common/guards/auth.guard';
 import { ILogger } from '../../common/interfaces/logger.interface';
 import ValidateMiddleware from '../../common/middlewares/validate.middleware';
 import UserLoginDto from './dto/user-login.dto';
 import UserRegisterDto from './dto/user-register.dto';
 import { IUsersController } from './interfaces/users.controller.interface';
 import { IUsersService } from './interfaces/users.service.interface';
-import AuthGuard from '../../common/guards/auth.guard';
 
 @injectable()
 export default class UsersController

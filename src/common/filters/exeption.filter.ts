@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 
 import HttpError from '../classes/http-error.class';
@@ -22,7 +23,7 @@ export default class ExceptionFilter implements IExceptionFilter {
     } else {
       this.logger.error(`${err.message}`);
 
-      res.status(500).send({ err: err.message });
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ err: err.message });
     }
   }
 }

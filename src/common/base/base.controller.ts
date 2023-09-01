@@ -2,6 +2,7 @@
 import 'reflect-metadata';
 
 import { Response, Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { injectable } from 'inversify';
 
 import { ILogger } from '../interfaces/logger.interface';
@@ -29,11 +30,11 @@ export default abstract class AController {
   }
 
   public ok<T>(res: Response, message: T): TResponse {
-    return this.send<T>(res, 200, message);
+    return this.send<T>(res, StatusCodes.OK, message);
   }
 
   public created(res: Response): TResponse {
-    return res.sendStatus(201);
+    return res.sendStatus(StatusCodes.CREATED);
   }
 
   protected bindRoutes(routes: IRoute[]): void {

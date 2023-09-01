@@ -6,7 +6,7 @@ import { ILogger } from '../common/interfaces/logger.interface';
 
 @injectable()
 export default class PrismaService {
-  private client: PrismaClient;
+  public client: PrismaClient;
 
   constructor(@inject(TYPES.ILogger) private logger: ILogger) {
     this.client = new PrismaClient();

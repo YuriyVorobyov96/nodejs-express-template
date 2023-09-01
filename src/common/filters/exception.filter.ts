@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 
@@ -13,7 +13,13 @@ import { ILogger } from '../interfaces/logger.interface';
 export default class ExceptionFilter implements IExceptionFilter {
   constructor(@inject(TYPES.ILogger) private logger: ILogger) {}
 
-  public catch(err: Error | HttpError, req: Request, res: Response): void {
+  public catch(
+    err: Error | HttpError,
+    req: Request,
+    res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    next: NextFunction,
+  ): void {
     if (err instanceof HttpError) {
       this.logger.error(
         `[${err.context}] Error ${err.statusCode}: ${err.message}`,

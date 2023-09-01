@@ -1,4 +1,4 @@
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 
 export default class User {
   private _password: string;
@@ -13,7 +13,14 @@ export default class User {
     return this._password;
   }
 
-  public async setPassword(pass: string, salt: number): Promise<void> {
-    this._password = await hash(pass, salt);
+  public async setPassword(password: string, salt: number): Promise<void> {
+    this._password = await hash(password, salt);
+  }
+
+  public comparePassword(
+    password: string,
+    passwordHash: string,
+  ): Promise<boolean> {
+    return compare(password, passwordHash);
   }
 }

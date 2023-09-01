@@ -3,9 +3,9 @@ import { validate } from 'class-validator';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-import { IMiddlware } from '../interfaces/middlware.interface';
+import { IMiddleware } from '../interfaces/middleware.interface';
 
-export default class ValidateMiddleware implements IMiddlware {
+export default class ValidateMiddleware implements IMiddleware {
   constructor(private classConstructor: ClassConstructor<object>) {}
 
   public async execute(

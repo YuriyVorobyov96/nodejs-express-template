@@ -36,6 +36,7 @@ export default class UsersController
         path: '/login',
         method: 'post',
         func: this.login,
+        middlewares: [new ValidateMiddleware(UserLoginDto)],
       },
     ]);
   }
@@ -48,10 +49,12 @@ export default class UsersController
     const isLogin = await this.usersService.login(body);
 
     if (!isLogin) {
-      return next(new HttpError(StatusCodes.UNAUTHORIZED, 'Wrong data'));
+      return next(
+        new HttpError(StatusCodes.UNAUTHORIZED, 'Wrong data', 'login'),
+      );
     }
 
-    this.ok(res, 'login');
+    this.ok(res, {});
   }
 
   public async register(
@@ -63,7 +66,11 @@ export default class UsersController
 
     if (!user) {
       return next(
-        new HttpError(StatusCodes.UNPROCESSABLE_ENTITY, 'User exists'),
+        new HttpError(
+          StatusCodes.UNPROCESSABLE_ENTITY,
+          'User exists',
+          'register',
+        ),
       );
     }
 

@@ -6,7 +6,7 @@ import { Server } from 'http';
 import { inject, injectable } from 'inversify';
 
 import TYPES from './common/dependency-injection/types';
-import ExceptionFilter from './common/filters/exeption.filter';
+import { IExceptionFilter } from './common/interfaces/exeption.filter.interface';
 import { ILogger } from './common/interfaces/logger.interface';
 import { IConfigService } from './config/interfaces/config.service.interface';
 import PrismaService from './database/prisma.service';
@@ -23,7 +23,7 @@ export default class App {
   constructor(
     @inject(TYPES.ILogger) private logger: ILogger,
     @inject(TYPES.UsersController) private usersController: UsersController,
-    @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
+    @inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
     @inject(TYPES.ConfigService) private configService: IConfigService,
     @inject(TYPES.PrismaService) private prismaService: PrismaService,
   ) {

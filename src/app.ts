@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import { Server } from 'http';
 
+import ExceptionFilter from './common/filters/exeption.filter';
 import LoggerService from './common/logger/logger.sevice';
 import UsersController from './modules/users/users.controller';
 
@@ -15,13 +16,19 @@ export default class App {
 
   private usersController: UsersController;
 
-  constructor(logger: LoggerService, usersController: UsersController) {
+  private exceptionFilter: ExceptionFilter;
+
+  constructor(
+    logger: LoggerService,
+    usersController: UsersController,
+    exceptionFilter: ExceptionFilter,
+  ) {
     this.app = express();
     this.port = 3000;
 
     this.logger = logger;
-
     this.usersController = usersController;
+    this.exceptionFilter = exceptionFilter;
   }
 
   private useMiddleware(): void { }
@@ -30,9 +37,14 @@ export default class App {
     this.app.use('/users', this.usersController.router);
   }
 
+  private useExceptionFilters(): void {
+    this.app.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+  }
+
   public async init(): Promise<void> {
     this.useMiddleware();
     this.useRoutes();
+    this.useExceptionFilters();
 
     this.server = this.app.listen(this.port);
 

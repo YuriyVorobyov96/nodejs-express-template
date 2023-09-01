@@ -8,6 +8,7 @@ import { inject, injectable } from 'inversify';
 import TYPES from './common/dependency-injection/types';
 import { IExceptionFilter } from './common/interfaces/exeption.filter.interface';
 import { ILogger } from './common/interfaces/logger.interface';
+import AuthMiddleware from './common/middlewares/auth.middleware';
 import { IConfigService } from './config/interfaces/config.service.interface';
 import PrismaService from './database/prisma.service';
 import UsersController from './modules/users/users.controller';
@@ -36,7 +37,12 @@ export default class App {
   }
 
   private useMiddlewares(): void {
+    const authMiddleware = new AuthMiddleware(
+      this.configService.get('JWT_SECRET'),
+    );
+
     this.app.use(json());
+    this.app.use(authMiddleware.execute.bind(authMiddleware));
   }
 
   private useRoutes(): void {

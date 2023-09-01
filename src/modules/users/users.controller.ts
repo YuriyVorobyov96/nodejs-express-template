@@ -13,6 +13,7 @@ import UserLoginDto from './dto/user-login.dto';
 import UserRegisterDto from './dto/user-register.dto';
 import { IUsersController } from './interfaces/users.controller.interface';
 import { IUsersService } from './interfaces/users.service.interface';
+import AuthGuard from '../../common/guards/auth.guard';
 
 @injectable()
 export default class UsersController
@@ -37,6 +38,12 @@ export default class UsersController
         method: 'post',
         func: this.login,
         middlewares: [new ValidateMiddleware(UserLoginDto)],
+      },
+      {
+        path: '/info',
+        method: 'get',
+        func: this.info,
+        middlewares: [new AuthGuard()],
       },
     ]);
   }
@@ -75,5 +82,12 @@ export default class UsersController
     }
 
     this.ok(res, user);
+  }
+
+  public info(
+    req: Request<unknown, unknown, UserRegisterDto>,
+    res: Response,
+  ): void {
+    this.ok(res, req.user);
   }
 }

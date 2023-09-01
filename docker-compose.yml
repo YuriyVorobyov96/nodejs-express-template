@@ -2,8 +2,6 @@ version: "3"
 services:
   app:
     build: .
-    volumes:
-      - "./:/app"
     links:
       - postgres
     ports:
@@ -20,6 +18,7 @@ services:
       - DP_LOGGING=${DP_LOGGING}
       - JWT_SECRET=${JWT_SECRET}
       - SALT_ROUND=${SALT_ROUND}
+    command: npm run start
 
   postgres:
     image: postgres:11.5

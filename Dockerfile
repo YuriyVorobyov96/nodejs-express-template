@@ -1,4 +1,4 @@
-FROM node:16.13.0
+FROM node:16-alpine
 
 WORKDIR /app
 
@@ -11,5 +11,3 @@ COPY . .
 EXPOSE 3000
 
 RUN npm run build
-
-CMD ["node", "./dist/src/main.js"]

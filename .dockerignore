@@ -5,3 +5,5 @@ config/local.js
 .env
 node_modules
 dist
+README.md
+READMERU.md

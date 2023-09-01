@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import { Server } from 'http';
 
 import LoggerService from './common/logger/logger.sevice';
+import UsersController from './modules/users/users.controller';
 
 export default class App {
   private app: Express;
@@ -12,15 +13,22 @@ export default class App {
 
   private logger: LoggerService;
 
-  constructor(logger: LoggerService) {
+  private usersController: UsersController;
+
+  constructor(logger: LoggerService, usersController: UsersController) {
     this.app = express();
     this.port = 3000;
+
     this.logger = logger;
+
+    this.usersController = usersController;
   }
 
   private useMiddleware(): void { }
 
-  private useRoutes(): void { }
+  private useRoutes(): void {
+    this.app.use('/users', this.usersController.router);
+  }
 
   public async init(): Promise<void> {
     this.useMiddleware();

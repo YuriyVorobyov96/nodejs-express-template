@@ -1,3 +1,4 @@
+import { compare, hash } from 'bcrypt';
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 import { sign } from 'jsonwebtoken';
@@ -5,8 +6,7 @@ import { sign } from 'jsonwebtoken';
 import HttpError from '../../common/classes/http-error.class';
 import TYPES from '../../common/dependency-injection/types';
 import { IConfigService } from '../../config/interfaces/config.service.interface';
-import { UserModel } from '../../database/models/user.model';
-import User from './entities/user.entity';
+import User from '../../database/entities/user.entity';
 import { IUserInfo } from './interfaces/user-info.interface';
 import { IUserLogin } from './interfaces/user-login.interface';
 import { IUserRegister } from './interfaces/user-register.interface';
@@ -25,17 +25,18 @@ export default class UsersService implements IUsersService {
     password,
   }: IUserRegister): Promise<User | null> {
     try {
-      const user = new User(email);
-
-      const saltRound = this.configService.get('SALT');
-
-      await user.setPassword(password, Number(saltRound));
-
       const existingUser = await this.getUserByEmail(email);
 
       if (existingUser) {
         return null;
       }
+
+      const passwordHash = await this.hashPassword(password);
+
+      const user = new User({
+        email,
+        password: passwordHash,
+      });
 
       await this.usersRepository.create(user);
 
@@ -52,9 +53,7 @@ export default class UsersService implements IUsersService {
       return null;
     }
 
-    const user = new User(existingUser.email);
-
-    const isPasswordCompare = user.comparePassword(
+    const isPasswordCompare = this.comparePassword(
       password,
       existingUser.password,
     );
@@ -79,7 +78,20 @@ export default class UsersService implements IUsersService {
     };
   }
 
-  private getUserByEmail(email: string): Promise<UserModel> {
+  private hashPassword(password: string): Promise<string> {
+    const saltRound = this.configService.get('SALT');
+
+    return hash(password, saltRound);
+  }
+
+  private comparePassword(
+    password: string,
+    passwordHash: string,
+  ): Promise<boolean> {
+    return compare(password, passwordHash);
+  }
+
+  private getUserByEmail(email: string): Promise<User> {
     return this.usersRepository.find(email);
   }
 

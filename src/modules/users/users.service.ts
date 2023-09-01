@@ -1,11 +1,11 @@
 import { compare, hash } from 'bcrypt';
+import config from 'config';
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 import { sign } from 'jsonwebtoken';
 
 import HttpError from '../../common/classes/http-error.class';
 import TYPES from '../../common/dependency-injection/types';
-import { IConfigService } from '../../config/interfaces/config.service.interface';
 import User from '../../database/entities/user.entity';
 import { IUserInfo } from './interfaces/user-info.interface';
 import { IUserLogin } from './interfaces/user-login.interface';
@@ -13,11 +13,13 @@ import { IUserRegister } from './interfaces/user-register.interface';
 import { IUsersRepository } from './interfaces/user-repository.interface';
 import { IUsersService } from './interfaces/users.service.interface';
 
+const SALT_ROUND: number = config.get('password.salt_round');
+const JWT_SECRET: string = config.get('jwt.secret');
+
 @injectable()
 export default class UsersService implements IUsersService {
   constructor(
-    @inject(TYPES.ConfigService) private configService: IConfigService,
-    @inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
+    @inject(TYPES.IUsersRepository) private usersRepository: IUsersRepository,
   ) {}
 
   public async create({
@@ -75,9 +77,7 @@ export default class UsersService implements IUsersService {
   }
 
   private hashPassword(password: string): Promise<string> {
-    const saltRound = this.configService.get('SALT_ROUND');
-
-    return hash(password, Number(saltRound));
+    return hash(password, SALT_ROUND);
   }
 
   private comparePassword(
@@ -95,7 +95,7 @@ export default class UsersService implements IUsersService {
     return new Promise((resolve, reject) => {
       sign(
         { email },
-        this.configService.get('JWT_SECRET'),
+        JWT_SECRET,
         {
           expiresIn: '1d',
         },

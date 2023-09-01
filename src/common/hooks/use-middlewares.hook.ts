@@ -1,21 +1,16 @@
+import config from 'config';
 import { Express, json } from 'express';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 
-import { IConfigService } from '../../config/interfaces/config.service.interface';
-import TYPES from '../dependency-injection/types';
 import { IHook } from '../interfaces/hook.interface';
 import AuthMiddleware from '../middlewares/auth.middleware';
 
+const JWT_SECRET: string = config.get('jwt.secret');
+
 @injectable()
 export default class UseMiddlewares implements IHook {
-  constructor(
-    @inject(TYPES.ConfigService) private configService: IConfigService,
-  ) {}
-
   public execute(app: Express): void {
-    const authMiddleware = new AuthMiddleware(
-      this.configService.get('JWT_SECRET'),
-    );
+    const authMiddleware = new AuthMiddleware(JWT_SECRET);
 
     app.use(json());
     app.use(authMiddleware.execute.bind(authMiddleware));

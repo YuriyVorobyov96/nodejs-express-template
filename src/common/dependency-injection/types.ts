@@ -12,7 +12,7 @@ const HOOKS = {
 
 const DOMAIN = {
   UsersController: Symbol.for('UsersController'),
-  IUsersService: Symbol.for('UsersService'),
+  IUsersService: Symbol.for('IUsersService'),
   IUsersRepository: Symbol.for('IUsersRepository'),
 };
 

@@ -6,7 +6,7 @@ import LoggerService from '../logger/logger.sevice';
 
 export { Router } from 'express';
 
-export default abstract class ABaseController {
+export default abstract class AController {
   private readonly _router: Router;
 
   constructor(private logger: LoggerService) {

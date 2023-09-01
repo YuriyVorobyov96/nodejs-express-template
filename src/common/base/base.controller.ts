@@ -45,8 +45,6 @@ export default abstract class AController {
       const pipeline = middlewares ? [...middlewares, handler] : handler;
 
       this.router[route.method](route.path, pipeline);
-
-      this.logger.log(`[${route.method}] ${route.path}`);
     });
   }
 }

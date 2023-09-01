@@ -11,7 +11,6 @@ import { ILogger } from '../../common/interfaces/logger.interface';
 import ValidateMiddleware from '../../common/middlewares/validate.middleware';
 import UserLoginDto from './dto/user-login.dto';
 import UserRegisterDto from './dto/user-register.dto';
-import User from './entities/user.entity';
 import { IUsersController } from './interfaces/users.controller.interface';
 import { IUsersService } from './interfaces/users.service.interface';
 

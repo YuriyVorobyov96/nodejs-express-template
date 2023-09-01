@@ -9,7 +9,12 @@
     "dev": "nodemon",
     "inspect": "nodemon -e ts,json --exec node --inspect=localhost:9229 -r ts-node/register src/main.ts",
     "lint": "eslint ./src/**",
-    "lint:fix": "eslint ./src/** --fix"
+    "lint:fix": "eslint ./src/** --fix",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
+    "migrate:up": "npm run typeorm -- migration:run -d src/database/data-source.ts",
+    "migrate:down": "npm run typeorm -- migration:revert -d src/database/data-source.ts",
+    "migrate:generate": "bash scripts/migration-generate.sh",
+    "migrate:create": "bash scripts/migration-create.sh"
   },
   "author": "",
   "license": "ISC",
@@ -24,7 +29,11 @@
     "http-status-codes": "2.2.0",
     "inversify": "6.0.1",
     "jsonwebtoken": "8.5.1",
-    "reflect-metadata": "0.1.13"
+    "pg": "8.8.0",
+    "reflect-metadata": "0.1.13",
+    "tslog": "3.3.4",
+    "typeorm": "0.3.10",
+    "typeorm-naming-strategies": "4.1.0"
   },
   "devDependencies": {
     "@a2seven/eslint-config": "^1.0.3",

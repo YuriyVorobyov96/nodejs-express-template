@@ -9,7 +9,9 @@ import { IModule } from './common/interfaces/module.interface';
 import LoggerService from './common/logger/logger.sevice';
 import ConfigService from './config/config.service';
 import { IConfigService } from './config/interfaces/config.service.interface';
-import PrismaService from './database/prisma.service';
+import DATA_SOURCE from './database/data-source';
+import { IDatabaseService } from './database/interfaces/database.service.interface';
+import TypeOrmService from './database/typeorm.service';
 
 export default class AppModule implements IModule {
   public init(): ContainerModule {
@@ -21,8 +23,8 @@ export default class AppModule implements IModule {
       bind<IConfigService>(TYPES.ConfigService)
         .to(ConfigService)
         .inSingletonScope();
-      bind<PrismaService>(TYPES.PrismaService)
-        .to(PrismaService)
+      bind<IDatabaseService<typeof DATA_SOURCE>>(TYPES.IDatabaseService)
+        .to(TypeOrmService)
         .inSingletonScope();
       bind<App>(TYPES.Application).to(App).inSingletonScope();
     });

@@ -6,7 +6,9 @@ import { inject, injectable } from 'inversify';
 import AController from '../../common/base/base.controller';
 import TYPES from '../../common/dependency-injection/types';
 import { ILogger } from '../../common/interfaces/logger.interface';
-import { IUsersController } from './users.controller.interface';
+import UserLoginDto from './dto/user-login.dto';
+import UserRegisterDto from './dto/user-register.dto';
+import { IUsersController } from './interfaces/users.controller.interface';
 
 @injectable()
 export default class UsersController
@@ -30,11 +32,19 @@ export default class UsersController
     ]);
   }
 
-  public login(req: Request, res: Response, next: NextFunction): void {
+  public login(
+    req: Request<unknown, unknown, UserLoginDto>,
+    res: Response,
+    next: NextFunction,
+  ): void {
     this.ok(res, 'login');
   }
 
-  public register(req: Request, res: Response, next: NextFunction): void {
+  public register(
+    req: Request<unknown, unknown, UserRegisterDto>,
+    res: Response,
+    next: NextFunction,
+  ): void {
     this.ok(res, 'register');
   }
 }

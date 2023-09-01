@@ -5,8 +5,8 @@ import TYPES from './common/dependency-injection/types';
 import ExceptionFilter from './common/filters/exeption.filter';
 import { ILogger } from './common/interfaces/logger.interface';
 import LoggerService from './common/logger/logger.sevice';
+import { IUsersController } from './modules/users/interfaces/users.controller.interface';
 import UsersController from './modules/users/users.controller';
-import { IUsersController } from './modules/users/users.controller.interface';
 
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<ILogger>(TYPES.ILogger).to(LoggerService);

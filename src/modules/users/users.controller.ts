@@ -46,15 +46,15 @@ export default class UsersController
     res: Response,
     next: NextFunction,
   ): Promise<void> {
-    const isLogin = await this.usersService.login(body);
+    const token = await this.usersService.login(body);
 
-    if (!isLogin) {
+    if (!token) {
       return next(
         new HttpError(StatusCodes.UNAUTHORIZED, 'Wrong data', 'login'),
       );
     }
 
-    this.ok(res, {});
+    this.ok(res, { token });
   }
 
   public async register(

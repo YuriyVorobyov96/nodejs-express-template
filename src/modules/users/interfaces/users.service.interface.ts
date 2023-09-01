@@ -4,5 +4,5 @@ import User from '../entities/user.entity';
 
 export interface IUsersService {
   create: (data: UserRegisterDto) => Promise<User | null>;
-  login: (data: UserLoginDto) => Promise<boolean>;
+  login: (data: UserLoginDto) => Promise<string | null>;
 }

@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
+import { sign } from 'jsonwebtoken';
 
 import HttpError from '../../common/classes/http-error.class';
 import TYPES from '../../common/dependency-injection/types';
@@ -43,19 +44,46 @@ export default class UsersService implements IUsersService {
     }
   }
 
-  public async login({ email, password }: IUserLogin): Promise<boolean> {
+  public async login({ email, password }: IUserLogin): Promise<string | null> {
     const existingUser = await this.getUserByEmail(email);
 
     if (!existingUser) {
-      return false;
+      return null;
     }
 
     const user = new User(existingUser.email);
 
-    return user.comparePassword(password, existingUser.password);
+    const isPasswordCompare = user.comparePassword(
+      password,
+      existingUser.password,
+    );
+
+    if (!isPasswordCompare) {
+      return null;
+    }
+
+    return this.signJwt(email);
   }
 
   private getUserByEmail(email: string): Promise<UserModel> {
     return this.usersRepository.find(email);
+  }
+
+  private signJwt(email: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      sign(
+        { email },
+        this.configService.get('JWT_SECRET'),
+        {
+          expiresIn: '1d',
+        },
+        (err, token) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(token);
+        },
+      );
+    });
   }
 }

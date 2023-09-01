@@ -1,10 +1,15 @@
+import 'reflect-metadata';
+
 import { NextFunction, Request, Response } from 'express';
+import { inject, injectable } from 'inversify';
 
 import AController from '../../common/base/base.controller';
+import TYPES from '../../common/dependency-injection/types';
 import { ILogger } from '../../common/interfaces/logger.interface';
 
+@injectable()
 export default class UsersController extends AController {
-  constructor(logger: ILogger) {
+  constructor(@inject(TYPES.ILogger) logger: ILogger) {
     super(logger);
 
     this.bindRoutes([

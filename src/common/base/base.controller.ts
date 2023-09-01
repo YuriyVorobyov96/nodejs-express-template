@@ -1,11 +1,15 @@
 /* eslint-disable no-underscore-dangle */
+import 'reflect-metadata';
+
 import { Response, Router } from 'express';
+import { injectable } from 'inversify';
 
 import { ILogger } from '../interfaces/logger.interface';
 import { IRoute } from '../interfaces/route.interface';
 
 export { Router } from 'express';
 
+@injectable()
 export default abstract class AController {
   private readonly _router: Router;
 

@@ -1,11 +1,16 @@
+import 'reflect-metadata';
+
 import { NextFunction, Request, Response } from 'express';
+import { inject, injectable } from 'inversify';
 
 import HttpError from '../classes/http-error.class';
+import TYPES from '../dependency-injection/types';
 import { IExceptionFilter } from '../interfaces/exeption.filter.interface';
 import { ILogger } from '../interfaces/logger.interface';
 
+@injectable()
 export default class ExceptionFilter implements IExceptionFilter {
-  constructor(private logger: ILogger) {}
+  constructor(@inject(TYPES.ILogger) private logger: ILogger) {}
 
   public catch(
     err: Error | HttpError,

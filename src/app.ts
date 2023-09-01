@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import config from 'config';
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { inject, injectable } from 'inversify';
@@ -9,6 +10,8 @@ import TYPES from './common/dependency-injection/types';
 import { IHook } from './common/interfaces/hook.interface';
 import { ILogger } from './common/interfaces/logger.interface';
 import { IDatabaseService } from './database/interfaces/database.service.interface';
+
+const PORT: number = config.get('app.port');
 
 @injectable()
 export default class App {
@@ -27,7 +30,7 @@ export default class App {
     @inject(TYPES.UseMiddlewares) private useMiddlewares: IHook,
   ) {
     this.app = express();
-    this.port = 3000;
+    this.port = PORT;
   }
 
   public async init(): Promise<void> {

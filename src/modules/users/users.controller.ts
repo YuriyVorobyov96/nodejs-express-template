@@ -84,10 +84,12 @@ export default class UsersController
     this.ok(res, user);
   }
 
-  public info(
+  public async info(
     req: Request<unknown, unknown, UserRegisterDto>,
     res: Response,
-  ): void {
-    this.ok(res, req.user);
+  ): Promise<void> {
+    const info = await this.usersService.info(req.user.email);
+
+    this.ok(res, info);
   }
 }

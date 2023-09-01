@@ -7,6 +7,7 @@ import TYPES from '../../common/dependency-injection/types';
 import { IConfigService } from '../../config/interfaces/config.service.interface';
 import { UserModel } from '../../database/models/user.model';
 import User from './entities/user.entity';
+import { IUserInfo } from './interfaces/user-info.interface';
 import { IUserLogin } from './interfaces/user-login.interface';
 import { IUserRegister } from './interfaces/user-register.interface';
 import { IUsersRepository } from './interfaces/user-repository.interface';
@@ -63,6 +64,19 @@ export default class UsersService implements IUsersService {
     }
 
     return this.signJwt(email);
+  }
+
+  public async info(email: string): Promise<IUserInfo | null> {
+    const existingUser = await this.getUserByEmail(email);
+
+    if (!existingUser) {
+      return null;
+    }
+
+    return {
+      id: existingUser.id,
+      email: existingUser.email,
+    };
   }
 
   private getUserByEmail(email: string): Promise<UserModel> {

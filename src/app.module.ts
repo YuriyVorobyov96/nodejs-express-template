@@ -7,8 +7,6 @@ import { IExceptionFilter } from './common/interfaces/exeption.filter.interface'
 import { ILogger } from './common/interfaces/logger.interface';
 import { IModule } from './common/interfaces/module.interface';
 import LoggerService from './common/logger/logger.sevice';
-import ConfigService from './config/config.service';
-import { IConfigService } from './config/interfaces/config.service.interface';
 import DATA_SOURCE from './database/data-source';
 import { IDatabaseService } from './database/interfaces/database.service.interface';
 import TypeOrmService from './database/typeorm.service';
@@ -19,9 +17,6 @@ export default class AppModule implements IModule {
       bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
       bind<IExceptionFilter>(TYPES.ExceptionFilter)
         .to(ExceptionFilter)
-        .inSingletonScope();
-      bind<IConfigService>(TYPES.ConfigService)
-        .to(ConfigService)
         .inSingletonScope();
       bind<IDatabaseService<typeof DATA_SOURCE>>(TYPES.IDatabaseService)
         .to(TypeOrmService)

@@ -15,10 +15,10 @@ export default class UsersModule implements IModule {
       bind<IUsersController>(TYPES.UsersController)
         .to(UsersController)
         .inSingletonScope();
-      bind<IUsersService>(TYPES.UsersService)
+      bind<IUsersService>(TYPES.IUsersService)
         .to(UsersService)
         .inSingletonScope();
-      bind<IUsersRepository>(TYPES.UsersRepository)
+      bind<IUsersRepository>(TYPES.IUsersRepository)
         .to(UsersRepository)
         .inSingletonScope();
     });

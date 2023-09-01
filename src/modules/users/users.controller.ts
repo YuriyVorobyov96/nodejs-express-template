@@ -22,7 +22,7 @@ export default class UsersController
 {
   constructor(
     @inject(TYPES.ILogger) logger: ILogger,
-    @inject(TYPES.UsersService) private usersService: IUsersService,
+    @inject(TYPES.IUsersService) private usersService: IUsersService,
   ) {
     super(logger);
 

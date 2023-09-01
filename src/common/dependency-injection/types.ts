@@ -1,15 +1,26 @@
-const TYPES = {
-  Application: Symbol.for('Application'),
-  ILogger: Symbol.for('ILogger'),
-  UsersController: Symbol.for('UsersController'),
-  UsersService: Symbol.for('UsersService'),
+const INFRASTRUCTURE = {
   ExceptionFilter: Symbol.for('ExceptionFilter'),
-  ConfigService: Symbol.for('ConfigService'),
+  ILogger: Symbol.for('ILogger'),
   IDatabaseService: Symbol.for('IDatabaseService'),
-  UsersRepository: Symbol.for('UsersRepository'),
+};
+
+const HOOKS = {
   UseRoutes: Symbol.for('UseRoutes'),
   UseMiddlewares: Symbol.for('UseMiddlewares'),
   UseExceptionFilters: Symbol.for('UseExceptionFilters'),
+};
+
+const DOMAIN = {
+  UsersController: Symbol.for('UsersController'),
+  IUsersService: Symbol.for('UsersService'),
+  IUsersRepository: Symbol.for('IUsersRepository'),
+};
+
+const TYPES = {
+  Application: Symbol.for('Application'),
+  ...INFRASTRUCTURE,
+  ...HOOKS,
+  ...DOMAIN,
 };
 
 export default TYPES;

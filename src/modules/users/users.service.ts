@@ -64,7 +64,7 @@ export default class UsersService implements IUsersService {
   }
 
   public async info(email: string): Promise<IUserInfo | null> {
-    const existingUser = await this.getUserByEmail(email);
+    const existingUser = await this.usersRepository.find(email);
 
     if (!existingUser) {
       return null;
@@ -76,6 +76,10 @@ export default class UsersService implements IUsersService {
     };
   }
 
+  public getUserByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.find(email);
+  }
+
   private hashPassword(password: string): Promise<string> {
     return hash(password, SALT_ROUND);
   }
@@ -85,10 +89,6 @@ export default class UsersService implements IUsersService {
     passwordHash: string,
   ): Promise<boolean> {
     return compare(password, passwordHash);
-  }
-
-  private getUserByEmail(email: string): Promise<User> {
-    return this.usersRepository.find(email);
   }
 
   private signJwt(email: string): Promise<string> {
